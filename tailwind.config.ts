@@ -1,0 +1,17 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  // ⚠️ CRITICAL: The "./src" part is mandatory because of your folder structure
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/actions/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  darkMode: 'class', // Enable class-based dark mode
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+export default config;
