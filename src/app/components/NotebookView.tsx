@@ -1,15 +1,24 @@
 'use client'
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import NotebookInterface from './NotebookInterface';
 import VisualizationsView from './VisualizationsView';
 import { useTheme } from './ThemeProvider';
+import { logoutAction } from '@/src/actions/auth';
 
 type Tab = 'notebook' | 'visualizations';
 
 export default function NotebookView() {
     const [activeTab, setActiveTab] = useState<Tab>('notebook');
     const { theme, toggleTheme } = useTheme();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        await logoutAction();
+        router.push('/login');
+        router.refresh();
+    };
 
     return (
         <div className="w-full h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors">
@@ -38,14 +47,24 @@ export default function NotebookView() {
                             📊 Visualizations
                         </button>
                     </div>
-                    {/* Dark Mode Toggle */}
-                    <button
-                        onClick={toggleTheme}
-                        className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                        title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                    >
-                        {theme === 'dark' ? '☀️' : '🌙'}
-                    </button>
+                    <div className="flex items-center gap-2">
+                        {/* Dark Mode Toggle */}
+                        <button
+                            onClick={toggleTheme}
+                            className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                        >
+                            {theme === 'dark' ? '☀️' : '🌙'}
+                        </button>
+                        {/* Logout Button */}
+                        <button
+                            onClick={handleLogout}
+                            className="px-4 py-2 rounded-lg bg-red-600 dark:bg-red-500 text-white hover:bg-red-700 dark:hover:bg-red-600 transition-colors text-sm font-semibold"
+                            title="Logout"
+                        >
+                            🚪 Logout
+                        </button>
+                    </div>
                 </div>
             </div>
 
